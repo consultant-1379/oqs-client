@@ -1,0 +1,9 @@
+version: '2'
+services:
+  client:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/opt/mean.js
+      - /opt/mean.js/node_modules

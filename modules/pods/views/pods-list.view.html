@@ -1,0 +1,39 @@
+<section class="smaller-width-section">
+  <div class="tabcontent">
+    <div class="page-header">
+      <div class="btn-toolbar pull-right">
+        <div class="btn-group">
+          <a ui-sref="pods.create" class="btn btn-success">Create</a>
+        </div>
+          <div class="btn-toolbar input-group" style="width:300px;">
+            <input type="text" class="form-control" id="filter-field" placeholder="Search any field...">
+            <span class="input-group-addon search-clear glyphicon glyphicon-remove-circle"></span>
+            <span class="input-group-addon glyphicon glyphicon-search"></span>
+          </div>
+      </div>
+      <h1>
+        Multi-Tenant Pods List
+      </h1>
+    </div>
+    <div ng-if="!vm.activePods.length">
+      <h3>There are no Multi-Tenant Pods in the Database</h3>
+    </div>
+
+    <div ng-if="vm.activePods.length">
+      <h3 style="border: none; margin-bottom: 0px">Queue-Processing Enabled</h3>
+      <div ng-repeat="pass in [{uniqueTableId: 'enabled-table'}]" ng-include="'log-table-template'"></div>
+
+      <h3 style="border: none; margin-bottom: 0px">Queue-Processing Disabled</h3>
+      <div ng-repeat="pass in [{uniqueTableId: 'disabled-table'}]" ng-include="'log-table-template'"></div>
+    </div>
+  </div>
+</section>
+
+<script id="log-table-template" type="text/ng-template">
+  <div class="clickable-row">
+    <table class="table table-condensed" id="{{pass.uniqueTableId}}">
+      <tbody class="text-white">
+      </tbody>
+    </table>
+  </div>
+</script>

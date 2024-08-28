@@ -1,0 +1,28 @@
+<section>
+  <div class="page-header">
+    <h1>Creating Admin User '{{ vm.user.name }}'</h1>
+  </div>
+  <form name="form" ng-submit="vm.submitForm()">
+    <fieldset>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.name.$invalid, 'has-success': form.name.$valid }">
+        <label for="name">Signum</label>
+        <input class="form-control" type="text" id="name" name="name" placeholder="Name" ng-model="vm.user.name" ng-minlength="2" ng-maxlength="50" required autofocus>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.name.$invalid, 'glyphicon-ok': form.name.$valid }"></span>
+        <span class="help-block" ng-messages="form.name.$error">
+          <p ng-message="required">This field is required</p>
+          <p ng-message="maxlength">This must be at most of length 50</p>
+          <p ng-message="minlength">This must be at most of length 2</p>
+        </span>
+      </div>
+    </fieldset>
+    <div>
+      <input type="radio" id="admin" ng-model="vm.adminType" value="admin">
+      <label for="Admin">Admin</label><br>
+      <input type="radio" id="superAdmin" ng-model="vm.adminType" value="superAdmin">
+      <label for="SuperAdmin">Super Admin</label><br>
+    </div>
+    <div class="btn-group pull-left" title="{{form.$invalid || vm.formSubmitting ? 'Ensure all values are valid and required fields are filled in.' : ''}}">
+      <button class="btn btn-primary" type="submit" id="Save" ng-disabled="form.$invalid || vm.formSubmitting">Save</button>
+    </div>
+  </form>
+</section>

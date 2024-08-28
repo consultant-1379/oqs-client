@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1><img src="../img/404.png" alt="404 Error" height="128" width="128"> Page Not Found</h1>
+</div>
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span ng-if="vm.errorMessage" ng-bind="vm.errorMessage"></span>
+  <span ng-if="!vm.errorMessage">Page Not Found</span>
+</div>

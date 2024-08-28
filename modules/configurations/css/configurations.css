@@ -1,0 +1,460 @@
+/* The following CSS is custom */
+
+.checkboxes {
+  display: inline-block;
+}
+
+.checkboxes input{
+  margin: 0 3px 0 0;
+}
+
+.checkboxes label{
+  margin: 2px 20px 0 3px;
+}
+
+.left-hand-panel, .right-hand-panel {
+  width: 50%;
+}
+
+.left-hand-panel {
+  display: inline-block;
+}
+
+.right-hand-panel {
+  text-align: right;
+  float: right;
+}
+
+.metrics-heading {
+  border: none !important;
+  margin-top: 15px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+}
+
+/* Tooltips for Queue and Active Time Outputs */
+.tooltip-parent {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip-parent .tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip-parent:hover .tooltip-text {
+    visibility: visible;
+}
+
+/*styling for the queueEnabled 'checkmark' and 'x' icons on the pod view page*/
+.glyphicon-queue-enabled.glyphicon-ok {
+  color:green;
+}
+.glyphicon-queue-enabled.glyphicon-remove {
+  color:red;
+}
+
+/*text will be center aligned on the tables*/
+table {
+  text-align:center !important;
+  table-layout: fixed;
+}
+table thead tr th{
+  text-align:center !important;
+  font-size: 1.3em !important;
+}
+
+.pod-row td {
+  font-size: 1.2em;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px black;
+}
+
+h1.radiator-header {
+  border-bottom:none;
+  margin:0 !important;
+  word-wrap: break-word;
+}
+
+.card-grid {
+  padding: 0 5px 10px 5px;
+}
+
+.card {
+  cursor: pointer;
+  min-height: 150px;
+  max-height: 150px;
+}
+
+.pod-disabled {
+  opacity: 0.8;
+}
+
+.card-disabled .card-body {
+  font-style: italic;
+}
+
+@media (max-width: 1424px) {
+  .smaller-card .card-header h3 {
+    font-size: 1.2em !important;
+  }
+  .smaller-card p.queue-size-numbers  {
+    font-size: 2em !important;
+    line-height: 1.0em !important;
+  }
+  .smaller-card p span.queue-threshold-number {
+    font-size: 1.2em !important;
+  }
+}
+
+@media (max-width: 1904px) {
+  .smaller-card .card-header h3 {
+    font-size: 1.313em !important;
+  }
+}
+
+.card-header h3 {
+  margin-top: 0 !important;
+  border-bottom: none;
+  margin-bottom: 0;
+  font-weight: bolder;
+  text-align: center;
+  padding: 0;
+}
+
+.card-body {
+  display: table;
+  height: 105px;
+  width: inherit;
+}
+
+.card-body div {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.card-body .title {
+  text-decoration: underline;
+  padding-bottom: 6px;
+}
+
+.card-body p {
+  margin: 0;
+  font-size: 20px;
+}
+
+p.queue-size-numbers  {
+  font-size: 3em;
+  line-height: 1.2em;
+}
+
+.queue-threshold-number {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.bg-warningCustom {
+  background-color: #e0a904 !important;
+}
+
+a.bg-warningCustom:hover, a.bg-warningCustom:focus,
+button.bg-warningCustom:hover,
+button.bg-warningCustom:focus {
+  background-color: #cd9a02 !important;
+}
+
+/* The below was taken from bootstrap 4.2 */
+.card {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.card > hr {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.card > .list-group:first-child .list-group-item:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.card > .list-group:last-child .list-group-item:last-child {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.radiator-body {
+  width:100%;
+  display: inline-block;
+  text-align: center;
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+}
+
+.card-subtitle {
+  margin-top: -0.375rem;
+  margin-bottom: 0;
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+.card-link:hover {
+  text-decoration: none;
+}
+
+.card-link + .card-link {
+  margin-left: 1.25rem;
+}
+
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgb(0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header:first-child {
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card-header + .list-group .list-group-item:first-child {
+  border-top: 0;
+}
+
+.card-footer {
+  padding: 0.75rem 1.25rem;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid rgb(0, 0, 0);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-footer:last-child {
+  border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px);
+}
+
+.card-header-tabs {
+  margin-right: -0.625rem;
+  margin-bottom: -0.75rem;
+  margin-left: -0.625rem;
+  border-bottom: 0;
+}
+
+.card-header-pills {
+  margin-right: -0.625rem;
+  margin-left: -0.625rem;
+}
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1.25rem;
+}
+
+.card-img {
+  width: 100%;
+  border-radius: calc(0.25rem - 1px);
+}
+
+.card-img-top {
+  width: 100%;
+  border-top-left-radius: calc(0.25rem - 1px);
+  border-top-right-radius: calc(0.25rem - 1px);
+}
+
+.card-img-bottom {
+  width: 100%;
+  border-bottom-right-radius: calc(0.25rem - 1px);
+  border-bottom-left-radius: calc(0.25rem - 1px);
+}
+
+.accordion .card:not(:first-of-type):not(:last-of-type) {
+  border-bottom: 0;
+  border-radius: 0;
+}
+
+.accordion .card:not(:first-of-type) .card-header:first-child {
+  border-radius: 0;
+}
+
+.accordion .card:first-of-type {
+  border-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.accordion .card:last-of-type {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/*Card BG COLORS - Overrides the Bootstrap 3.2 ones.*/
+.bg-secondary {
+  background-color: #6c757d !important;
+}
+
+a.bg-secondary:hover, a.bg-secondary:focus,
+button.bg-secondary:hover,
+button.bg-secondary:focus {
+  background-color: #545b62 !important;
+}
+
+.bg-dark {
+  background-color: #343a40 !important;
+}
+
+a.bg-dark:hover, a.bg-dark:focus,
+button.bg-dark:hover,
+button.bg-dark:focus {
+  background-color: #1d2124 !important;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+}
+
+a.bg-success:hover, a.bg-success:focus,
+button.bg-success:hover,
+button.bg-success:focus {
+  background-color: #1e7e34 !important;
+}
+
+.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+a.bg-warning:hover, a.bg-warning:focus,
+button.bg-warning:hover,
+button.bg-warning:focus {
+  background-color: #d39e00 !important;
+}
+
+.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+a.bg-danger:hover, a.bg-danger:focus,
+button.bg-danger:hover,
+button.bg-danger:focus {
+  background-color: #bd2130 !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+/* Tabs Styling */
+.tab {
+  border: none;
+  overflow: hidden;
+  background-color: #ccc;
+  border-bottom: none;
+}
+
+/* Style the buttons inside the tab-bar */
+.tab button {
+  border: none;
+  background-color: inherit;
+  float: left;
+  cursor: pointer;
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-bottom: none;
+}
+
+/* Style the tab content */
+.tabcontent {
+  padding: 6px 6px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  display: inline-block;
+  margin: 15% auto;
+  margin-left: 10%;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

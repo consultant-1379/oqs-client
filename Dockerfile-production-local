@@ -1,0 +1,28 @@
+FROM armdocker.seli.gic.ericsson.se/dockerhub-ericsson-remote/node:14.17.0-alpine AS builder
+
+# 80 = HTTP
+EXPOSE 80
+
+# Temporarily set development environment variable during build
+ENV NODE_ENV development
+
+# Set the working directory
+WORKDIR /opt/mean.js
+
+# Copy the production files
+COPY config ./config/
+COPY modules ./modules/
+COPY client.js webpack.common.js package.json ./
+
+# Install the production packages
+RUN apk add --no-cache git \
+    && npm install \
+    && export NODE_ENV="production" && npm run build:client
+
+FROM nginx:1.15.12-alpine
+COPY default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /opt/mean.js/public/* /usr/share/nginx/html/
+COPY modules/index.html /usr/share/nginx/html
+
+# Copy Version for Sharing via Volume
+COPY VERSION /usr/share/nginx/version-info/

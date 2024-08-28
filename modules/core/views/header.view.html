@@ -1,0 +1,67 @@
+<div class="container" ng-controller="HeaderController as vm">
+  <div class="navbar-header">
+    <button class="navbar-toggle" type="button" ng-click="vm.isCollapsed = !vm.isCollapsed">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a ui-sref="home" class="navbar-brand">OpenStack Queuing Solution</a>
+  </div>
+  <nav class="navbar-collapse" uib-collapse="!vm.isCollapsed" role="navigation">
+    <ul class="nav navbar-nav" ng-if="vm.menu.shouldRender(vm.authentication.user);">
+      <li ng-repeat="item in vm.menu.items | orderBy: 'position'" ng-if="item.shouldRender(vm.authentication.user);" ng-switch="item.type" ng-class="{ dropdown: item.type === 'dropdown' }" ui-sref-active="active" class="{{item.class}}" uib-dropdown="item.type === 'dropdown'">
+        <a href="#" ng-switch-when="dropdown" class="dropdown-toggle" uib-dropdown-toggle role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>
+        <ul ng-switch-when="dropdown" class="dropdown-menu">
+          <li ng-repeat="subitem in item.items | orderBy: 'position'" ng-if="subitem.shouldRender(vm.authentication.user);">
+            <a ui-sref="{{subitem.state}}({{subitem.params}})">{{ subitem.title }}</a>
+          </li>
+        </ul>
+        <a ng-switch-default ui-sref="{{item.state}}">{{ item.title }}</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><div class="ebSystemBarComponent-body"></div></li>
+      <li uib-dropdown style="cursor: pointer">
+        <a class="dropdown-toggle" uib-dropdown-toggle>
+          Versions Info
+          <b class="caret"></b>
+        </a>
+        <ul ng-if="vm.versionsError" class="dropdown-menu" role="menu">
+          <li><a>{{ vm.versionsError }}</a></li>
+        </ul>
+        <ul ng-if="vm.versions" class="dropdown-menu" role="menu">
+          <li><a href="https://arm1s11-eiffel004.eiffel.gic.ericsson.se:8443/nexus/content/sites/tor/oqs-baseline/latest/changelog.html"><strong>Baseline:</strong> {{ vm.versions.baseline }}</a></li>
+          <li><a href="https://arm1s11-eiffel004.eiffel.gic.ericsson.se:8443/nexus/content/sites/tor/oqs-client/latest/changelog.html"><strong>Client:</strong> {{ vm.versions.client }}</a></li>
+          <li><a href="https://arm1s11-eiffel004.eiffel.gic.ericsson.se:8443/nexus/content/sites/tor/oqs-server/latest/changelog.html"><strong>Server:</strong> {{ vm.versions.server }}</a></li>
+          <li><a href="https://arm1s11-eiffel004.eiffel.gic.ericsson.se:8443/nexus/content/sites/tor/oqs-helpdocs/latest/changelog.html"><strong>Help-Docs:</strong> {{ vm.versions.helpdocs }}</a></li>
+          <li><a href="https://arm1s11-eiffel004.eiffel.gic.ericsson.se:8443/nexus/content/sites/tor/oqs-apidocs/latest/changelog.html"><strong>API-Docs:</strong> {{ vm.versions.apidocs }}</a></li>
+        </ul>
+      </li>
+      <li><div class="ebSystemBarComponent-body"></div></li>
+      <li uib-dropdown style="cursor: pointer">
+        <a class="dropdown-toggle" uib-dropdown-toggle>
+          <span class="ebIcon ebIcon_{{ vm.authentication.user ? 'logout' : 'login' }}"></span>
+          {{ vm.authentication.user ? vm.authentication.user.displayName : 'anonymous' }}
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-if="!vm.authentication.user"><a ui-sref="authentication.signin" target="_self">Login</a></li>
+          <li ng-hide="vm.authentication.user.roles[0] !== 'superAdmin'"><a ui-sref="users.list">Admins</a></li>
+          <li ng-if="vm.authentication.user"><a ng-click="vm.authentication.signout()" target="_self">Logout</a></li>
+        </ul>
+      </li>
+      <li><div class="ebSystemBarComponent-body"></div></li>
+      <li uib-dropdown style="cursor: pointer">
+        <a class="dropdown-toggle" uib-dropdown-toggle>
+          <span class="ebIcon ebIcon_help"></span> Help
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="/help-docs" target="_blank">Help Documentation</a></li>
+          <li><a href="/api-docs" target="_blank">API Documentation</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>

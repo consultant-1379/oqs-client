@@ -1,0 +1,94 @@
+<section class="smaller-width-section">
+  <div class="page-header">
+    <h1>{{ vm.pageStatus }} '{{ vm.configuration.name }}'</h1>
+  </div>
+  <form name="form" ng-submit="vm.submitForm()">
+    <fieldset>
+      <div class="form-group has-feedback"
+        ng-class="{ 'has-error': form.name.$invalid, 'has-success': form.name.$valid }">
+        <label for="name">Configuration Name</label>
+        <input class="form-control" type="text" id="name" name="name" placeholder="Name"
+          ng-model="vm.configuration.name" ng-disabled="vm.pageStatus == 'Editing Configuration'" ng-minlength="4"
+          ng-maxlength="20" ng-pattern="/^[a-zA-Z0-9\-_.]*$/" required autofocus>
+        <span class="glyphicon form-control-feedback"
+          ng-class="{ 'glyphicon-remove': form.name.$invalid, 'glyphicon-ok': form.name.$valid }"></span>
+        <span class="help-block" ng-messages="form.name.$error">
+          <p ng-message="required">This field is required</p>
+          <p ng-message="minlength">This must be at least of length 4</p>
+          <p ng-message="maxlength">This must be at most of length 20</p>
+          <p ng-message="pattern">This must only contain letters, numbers, dots, dashes and underscores</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback"
+        ng-class="{ 'has-error': form.podDefaultLoadTolerance.$invalid, 'has-success': form.podDefaultLoadTolerance.$valid }">
+        <label>Pod Default Load Tolerance</label>
+        <input class="form-control" placeholder="50" id="podDefaultLoadTolerance" name="podDefaultLoadTolerance"
+          ng-model="vm.configuration.defaultPodLoadTolerance" ng-pattern="/^[0-9]+$/" required autofocus>
+        <span class="glyphicon form-control-feedback"
+          ng-class="{ 'glyphicon-remove': form.podDefaultLoadTolerance.$invalid, 'glyphicon-ok': form.podDefaultLoadTolerance.$valid }"></span>
+        <span class="help-block" ng-messages="form.podDefaultLoadTolerance.$error">
+          <p ng-message="required">This field is required</p>
+          <p ng-message="pattern">This must only contain numbers</p>
+        </span>
+      </div>
+      <button class="btn btn-danger" type="button" ng-click="vm.removeConfiguration(vm.configuration)"
+        ng-if="vm.pageStatus == 'Editing Configuration'">Delete</button>
+    </fieldset>
+    <fieldset>
+      <legend>Products</legend>
+      <div ng-repeat="product in vm.configuration.products track by $index" class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <h6 class="panel-title pull-left" style="padding-top: 7.5px;"><strong>{{ product.name }}</strong></h6>
+        </div>
+        <button id="remove-product[{{$index}}]" ng-click="vm.removeProduct(product)" type="button"
+              class="btn btn-sm remove-button form-button"><i class="glyphicon glyphicon-remove"></i> Remove Product</button>
+        <div class="panel-body">
+           <!-- Product Name -->
+           <div class="form-group has-feedback"
+           ng-class="{ 'has-error': form['product[' + $index + ']'].$invalid, 'has-success': form['product[' + $index + ']'].$valid }" ng-minlength="4"
+           ng-maxlength="20" ng-pattern="/^[a-zA-Z0-9\-_.]*$/">
+           <label>Name</label>
+           <input class="form-control" name="product[{{$index}}]" type="text" placeholder="ProductName"
+             ng-model="vm.configuration.products[$index].name">
+           <span class="glyphicon form-control-feedback"
+             ng-class="{ 'glyphicon-remove': form['product[' + $index + ']'].$invalid, 'glyphicon-ok': form['product[' + $index + ']'].$valid }"></span>
+           <span class="help-block" ng-messages="form['product[' + $index + ']'].$error">
+            <p ng-message="required">This field is required</p>
+            <p ng-message="minlength">This must be at least of length 4</p>
+            <p ng-message="maxlength">This must be at most of length 20</p>
+            <p ng-message="pattern">This must only contain letters, numbers, dots, dashes and underscores</p>
+           </span>
+         </div>
+          <!-- Product Load Value -->
+          <div class="form-group has-feedback"
+            ng-class="{ 'has-error': form['product[' + $index + ']'].$invalid, 'has-success': form['product[' + $index + ']'].$valid }">
+            <label>Load Value</label>
+            <input class="form-control" name="product[{{$index}}]" type="text" placeholder="15"
+              ng-model="vm.configuration.products[$index].defaultProductLoadValue" ng-pattern="/^[0-9/s]*$/">
+            <span class="glyphicon form-control-feedback"
+              ng-class="{ 'glyphicon-remove': form['product[' + $index + ']'].$invalid, 'glyphicon-ok': form['product[' + $index + ']'].$valid }"></span>
+            <span class="help-block" ng-messages="form['product[' + $index + ']'].$error">
+              <p ng-message="pattern">This must only contain number.</p>
+            </span>
+          </div>
+          <!-- Timeout -->
+          <div class="form-group has-feedback"
+            ng-class="{ 'has-error': form['product[' + $index + ']'].$invalid, 'has-success': form['product[' + $index + ']'].$valid }">
+            <label>Timeout Value (minutes)</label>
+            <input class="form-control" name="product[{{$index}}]" type="text" placeholder="60"
+              ng-model="vm.configuration.products[$index].defaultProductTimeoutValue" ng-pattern="/^[0-9/s]*$/">
+            <span class="glyphicon form-control-feedback"
+              ng-class="{ 'glyphicon-remove': form['product[' + $index + ']'].$invalid, 'glyphicon-ok': form['product[' + $index + ']'].$valid }"></span>
+            <span class="help-block" ng-messages="form['product[' + $index + ']'].$error">
+              <p ng-message="pattern">This must only contain number.</p>
+            </span>
+          </div>
+        </div>
+      </div>
+      <button id="add-product" ng-click="vm.addProduct()" type="button" class="btn btn-default pull-right"><i
+        class="glyphicon glyphicon-plus"></i> Add Product</button>
+    </fieldset>
+    <button class="btn btn-primary" type="submit" ng-disabled="form.$invalid || vm.formSubmitting">Save</button>
+
+  </form>
+</section>

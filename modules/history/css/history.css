@@ -1,0 +1,65 @@
+.smaller-width-section {
+  max-width: 1600px;
+  margin: auto !important;
+}
+
+.log-card {
+  margin-bottom:10px !important;
+  min-height: 70px !important;
+  max-height: none !important;
+  cursor: default !important;
+  background-color: #edf0f1 !important;
+}
+
+.log-card-body { height: inherit !important; }
+
+.log-action-link { font-size:inherit !important; }
+
+.history-log-row { background-color: #f9f9f9 !important; }
+
+.history-striped > tbody > tr:nth-child(odd) {
+  background-color: #ececec !important;
+}
+
+[id^=update-table-] {
+  margin: auto !important;
+  display: none;
+}
+
+.align-left { text-align: left !important; }
+
+.align-right { text-align: right !important; }
+
+.align-left-center {
+  text-align: left !important;
+  vertical-align: middle !important;
+}
+
+.no-wrap-text { white-space: nowrap !important; }
+
+.break-wrap-text { word-wrap: break-word !important; }
+
+a.sub-heading { font-size: 0.5em; }
+
+a.sub-heading.disabled {
+  color: #AAAAAA !important;
+  cursor: default !important;
+  pointer-events: none !important;
+  text-decoration: none !important;
+}
+
+.icon-blue {
+  color: #007bff;
+  font-size: 25px !important;
+}
+
+.btn-warning:disabled {
+  background-color: rgb(189, 183, 177) !important;
+  border-color: rgb(158, 158, 158) !important;
+}
+
+table.dataTable thead .sorting { background: url('../images/sort_both.png') no-repeat center right; }
+table.dataTable thead .sorting_asc { background: url('../images/sort_asc.png') no-repeat center right; }
+table.dataTable thead .sorting_desc { background: url('../images/sort_desc.png') no-repeat center right; }
+table.dataTable thead .sorting_asc_disabled { background: url('../images/sort_asc_disabled.png') no-repeat center right; }
+table.dataTable thead .sorting_desc_disabled { background: url('../images/sort_desc_disabled.png') no-repeat center right; }

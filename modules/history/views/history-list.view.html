@@ -1,0 +1,24 @@
+<section class="smaller-width-section">
+  <div class="page-header">
+    <div class="btn-toolbar pull-right input-group" style="width:300px">
+      <input type="text" class="form-control" id="filter-field" placeholder="Search any field...">
+      <span class="input-group-addon"><i class="fa fa-search"></i></span>
+    </div>
+    <h1>{{ vm.objectHeader }} Historical Logs</h1>
+  </div>
+
+  <h3>Live in Database</h3>
+  <div ng-repeat="pass in [{uniqueTableId:'live-table'}]" ng-include="'log-table-template'"></div>
+
+  <h3>Deleted from Database</h3>
+  <div ng-repeat="pass in [{uniqueTableId:'deleted-table'}]" ng-include="'log-table-template'"></div>
+</section>
+
+<script id="log-table-template" type="text/ng-template">
+  <div class ="non-clickable-row">
+    <table class="table table-condensed history-striped" id="{{pass.uniqueTableId}}">
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</script>

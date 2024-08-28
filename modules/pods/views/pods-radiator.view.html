@@ -1,0 +1,76 @@
+<section class="container-radiator">
+  <div class="tab">
+    <button class="tablinks" id="showAll" ng-click="vm.selectRadiatorView('showAll')">Show All</button>
+    <button class="tablinks" id="customView" ng-click="vm.selectRadiatorView('customView')">Custom View</button>
+    <button class="bg-success"id="addPodsToCustomView" style="color: white;" ng-click="vm.filterPodsModal()">Filter Pods</button>
+  </div>
+  <div class="tabcontent">
+    <div ng-if="vm.activePods.length == 0">
+      <h3>There are no Multi-Tenant Pods in the Database</h3>
+    </div>
+    <!--
+      * Only populate the grid if there are pods in the Db:
+      * Go through each individual Pod in the db to populate the cards...
+      * Also set the size of the cards based on the quantity of Pods in the db
+    -->
+    <div ng-if="vm.activePods.length > 0" ui-sref="pods.view({podId: pod._id})"
+    ng-repeat="pod in vm.activePods | orderBy:['-queueEnabled', 'name']"
+    class="d-flex pb-5 align-self-stretch card-grid text-white col-lg-{{ vm.activePods.length <= 5 ? '12' : vm.activePods.length <= 10 ? '6' : vm.activePods.length <= 15 ? '4' : vm.activePods.length <= 20 ? '3' : '2' }}">
+      <!--
+        * Check whether queuing is enabled for the pod before assigning a class for styling.
+        * Set the style of the card based on whether queueing is enabled / No. of deployments queued.
+      -->
+      <div class="card text-shadow {{ vm.activePods.length > 20 ? 'smaller-card' : '' }} {{ pod.queueEnabled == false ? 'bg-secondary pod-disabled' : pod.isVIO || pod.percentLoad <= 70 ? 'bg-success': pod.percentLoad > 70 && pod.percentLoad < 90 ? 'bg-warningCustom': pod.percentLoad >= 90 ? 'bg-danger': '' }} }}">
+        <div class="card-header tooltip-parent">
+          <h3 class="podName">
+            {{ pod.name }}
+            <i class="ebIcon ebIcon_info" ng-if="pod.queueEnabled == false"></i>
+          </h3>
+          <span class="tooltip-text" ng-if="pod.queueEnabled == false" style="z-index: 1000">
+            Queue-Processing for {{ pod.name }} is disabled
+          </span>
+        </div>
+        <div class="card-body" style="text-align: center;">
+          <div class="radiator-body">
+            <div style="display: inline-block;">
+              <p >Queued: {{ pod.queuedDeplCount || 0 }}</p>
+              <br>
+              <p >Load: {{ pod.currentPodLoad }} / {{ pod.podLoadTolerance }} ({{pod.percentLoad}}%)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    . <!-- This Full-Stop is necessary for rendering the full tab-container -->
+  </div>
+  <div id="podsModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h1>Select Pods for Custom Radiator View</h1>
+      <hr>
+      <div ng-if="vm.nonVIOPods.length > 0" ng-repeat="pod in vm.nonVIOPods | orderBy:['-queueEnabled', 'name']"
+        class="d-flex pb-4 align-self-stretch card-grid text-white col-lg-3">
+          <!--
+            * Check whether queuing is enabled for the pod before assigning a class for styling.
+            * Set the style of the card based on whether queueing is enabled / No. of deployments queued.
+          -->
+          <div class="card text-shadow smaller-card bg-success pods" id="pod({{pod._id}})" ng-click="vm.addFilteredPods(pod._id)">
+            <div class="card-header tooltip-parent">
+              <h3>
+                {{ pod.name }}
+              </h3>
+            </div>
+            <div class="card-body" style="text-align: center;">
+              <div class="radiator-body">
+                <div style="display: inline-block;">
+                  <p >Queued: {{ pod.queuedDeplCount }}</p>
+                  <p >Load: {{ pod.currentPodLoad }} / {{ pod.podLoadTolerance }} ({{pod.percentLoad}}%)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>

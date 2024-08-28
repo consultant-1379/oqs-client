@@ -1,0 +1,33 @@
+<section class="smaller-width-section">
+  <div class="page-header">
+    <div class="btn-toolbar pull-right">
+      <a class="btn btn-primary" ui-sref="configurations.edit({configurationId: vm.configuration._id})">Edit</a>
+      <a class="btn btn-warning" ui-sref="history.view({objType: 'configurations', objId: vm.configuration._id})">View
+        Configuration Logs</a>
+    </div>
+    <h1> Viewing Configuration: '{{ vm.configuration.name }}' </h1>
+  </div>
+
+  <!-- POD DETAILS -->
+  <div class="left-hand-panel">
+    <table style="width: auto !important; border-collapse:separate; border-spacing: 0.5em;" class="align-left">
+      <tr>
+        <td><b>Default Pod Load Tolerance</b></td>
+        <td>{{ vm.configuration.defaultPodLoadTolerance }}</td>
+      </tr>
+    </table><br>
+    <label>Products:</label>
+    <div ng-repeat="product in vm.configuration.products">
+      <table style="width: auto !important; border-collapse:separate; border-spacing: 0.5em;" class="align-left">
+        <tr>
+          <td><b>Name:</b></td>
+          <td>{{ product.name }}</td>
+          <td><b>Load Value:</b></td>
+          <td>{{ product.defaultProductTimeoutValue }}</td>
+          <td><b>Timeout Value:</b></td>
+          <td>{{ product.defaultProductTimeoutValue }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>

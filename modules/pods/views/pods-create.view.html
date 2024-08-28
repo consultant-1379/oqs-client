@@ -1,0 +1,94 @@
+<section class="smaller-width-section">
+  <div class="page-header">
+    <h1>{{ vm.pageStatus }} '{{ vm.pod.name }}'</h1>
+  </div>
+  <form name="form" ng-submit="vm.submitForm()">
+    <fieldset>
+      <div class="form-group has-feedback"
+        ng-class="{ 'has-error': form.name.$invalid, 'has-success': form.name.$valid }">
+        <label for="name">Pod Name</label>
+        <input class="form-control" type="text" id="name" name="name" placeholder="Name" ng-model="vm.pod.name"
+          ng-disabled="vm.pageStatus == 'Editing Pod'" ng-minlength="5" ng-maxlength="20"
+          ng-pattern="/^[a-zA-Z0-9\-_.]*$/" required autofocus>
+        <span class="glyphicon form-control-feedback"
+          ng-class="{ 'glyphicon-remove': form.name.$invalid, 'glyphicon-ok': form.name.$valid }"></span>
+        <span class="help-block" ng-messages="form.name.$error">
+          <p ng-message="required">This field is required</p>
+          <p ng-message="minlength">This must be at least of length 5</p>
+          <p ng-message="maxlength">This must be at most of length 20</p>
+          <p ng-message="pattern">This must only contain letters, numbers, dots, dashes and underscores</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback"
+        ng-class="{ 'has-error': form.cENMLoadValue.$invalid, 'has-success': form.cENMLoadValue.$valid }">
+        <label for="podLoadTolerance">Pod Load Tolerance</label>
+        <input class="form-control" type="number" placeholder="50" id="podLoadTolerance" name="podLoadTolerance"
+          ng-model="vm.pod.podLoadTolerance">
+        <span class="glyphicon form-control-feedback"
+          ng-class="{ 'glyphicon-remove': form.cENMLoadValue.$invalid, 'glyphicon-ok': form.cENMLoadValue.$valid }"></span>
+      </div>
+      <div class="form-group">
+        <label for="queueEnabled">Queue-Processing Status <i class="ebIcon ebIcon_info"
+            title="Disable this setting to prevent automated jobs being executed against this Cloud/Pod"></i></label><br />
+        <select class="form-control"
+          ng-init="vm.pod.queueEnabled = (vm.pod.queueEnabled != undefined) ? vm.pod.queueEnabled : true"
+          ng-model="vm.pod.queueEnabled" id="queueEnabled">
+          <option ng-value="false">Disabled: Disabled automated Job execution on this Cloud/Pod</option>
+          <option ng-value="true">Enabled: Allow automated Job execution on this Cloud/Pod</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="productType">Queue Product(s)</label><br />
+        <div class="checkboxes">
+          <label><input type="checkbox" ng-model="vm.productTypesSelected.All"
+              ng-disabled="vm.productTypesSelected.cENM || vm.productTypesSelected.vENM || vm.productTypesSelected.CCD"
+              ng-true-value="true" ng-false-value="false" ng-change="vm.optionSelected()"> All</label>
+        </div>
+        <div class="checkboxes" ng-repeat="productName in vm.productTypeNames">
+          <label><input type="checkbox" ng-model="vm.productTypesSelected[productName]" id="{{productName}}"
+              ng-disabled="vm.productTypesSelected.All"
+              ng-true-value="true" ng-false-value="false" ng-change="vm.optionSelected()"> {{productName}}</label>
+        </div>
+        <div class="help-block" id="chk-option-error"> Please select at least one option.</div>
+      </div>
+      <fieldset>
+        <legend>Products</legend>
+        <div ng-repeat="product in vm.pod.products track by $index" class="panel panel-default"
+          ng-if="vm.productTypesSelected[product.name] || vm.productTypesSelected.All">
+          <div class="panel-heading clearfix">
+            <h6 class="panel-title pull-left" style="padding-top: 7.5px;"><strong>{{ product.name }}</strong></h6>
+          </div>
+          <div class="panel-body">
+            <!-- Product Load Value -->
+            <div class="form-group has-feedback"
+              ng-class="{ 'has-error': form['product[' + $index + ']'].$invalid, 'has-success': form['product[' + $index + ']'].$valid }">
+              <label>Load Value</label>
+              <input class="form-control" name="product[{{$index}}]" type="text" placeholder="15"
+                ng-model="vm.pod.products[$index].loadValue" ng-pattern="/^[0-9/s]*$/">
+              <span class="glyphicon form-control-feedback"
+                ng-class="{ 'glyphicon-remove': form['product[' + $index + ']'].$invalid, 'glyphicon-ok': form['product[' + $index + ']'].$valid }"></span>
+              <span class="help-block" ng-messages="form['product[' + $index + ']'].$error">
+                <p ng-message="pattern">This must only contain number.</p>
+              </span>
+            </div>
+            <!-- Timeout -->
+            <div class="form-group has-feedback"
+              ng-class="{ 'has-error': form['product[' + $index + ']'].$invalid, 'has-success': form['product[' + $index + ']'].$valid }">
+              <label>Timeout Value (minutes)</label>
+              <input class="form-control" name="product[{{$index}}]" type="text" placeholder="60"
+                ng-model="vm.pod.products[$index].timeoutValue" ng-pattern="/^[0-9/s]*$/">
+              <span class="glyphicon form-control-feedback"
+                ng-class="{ 'glyphicon-remove': form['product[' + $index + ']'].$invalid, 'glyphicon-ok': form['product[' + $index + ']'].$valid }"></span>
+              <span class="help-block" ng-messages="form['product[' + $index + ']'].$error">
+                <p ng-message="pattern">This must only contain number.</p>
+              </span>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </fieldset>
+    <button class="btn btn-primary" type="submit" ng-disabled="form.$invalid || vm.formSubmitting">Save</button>
+    <button class="btn btn-danger" type="button" ng-click="vm.removePod(vm.pod)"
+      ng-if="vm.pageStatus == 'Editing Pod'">Delete</button>
+  </form>
+</section>

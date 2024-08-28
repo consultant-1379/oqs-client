@@ -1,0 +1,117 @@
+<section class="smaller-width-section">
+  <div class="page-header">
+    <div class="btn-toolbar pull-right">
+      <button class="btn btn-success" ng-click="vm.toggleAllVisibility()">Show / Hide All Changes</button>
+      <a class="btn btn-warning" ng-if="vm.objectType == 'Pod'" ng-disabled="vm.log.deletedAt && vm.log.deletedBy" ui-sref="pods.view({podId: vm.log.associated_id})">View {{vm.objectType}} Artifact</a>
+    </div>
+    <h1>
+      Log for {{ vm.objectType }}: {{ vm.log.currentData.name }}
+      <a class="sub-heading {{vm.objectType != 'Pod' || vm.log.deletedAt || vm.log.deletedBy ? 'disabled' : 'enabled' }}" ui-sref="pods.view({podId: vm.log.associated_id})">Object ID: {{ vm.log.associated_id }}</a>
+    </h1>
+  </div>
+
+  <!-- SEARCH BUTTON -->
+  <div class="search-group pull-right">
+    <div class="btn-toolbar input-group" style="width:450px">
+      <input type="text" class="form-control" id="filter-field" placeholder="Search any key/value..." ng-model="vm.searchValue">
+      <span class="input-group-addon search-clear glyphicon glyphicon-remove-circle" ng-click="vm.clearSearch()" ng-if="vm.searchValue"></span>
+      <span class="input-group-addon search-button" id="key-filter-button" ng-click="vm.filterLogs('key')">
+        Key <span class="glyphicon glyphicon-search"></span>
+      </span>
+      <span class="input-group-addon search-button" id="value-filter-button" ng-click="vm.filterLogs('value')">
+        Value <span class="glyphicon glyphicon-search"></span>
+      </span>
+    </div>
+  </div>
+
+  <!-- OBJECT CREATED -->
+  <div ng-if="vm.log.createdAt && vm.log.createdBy && vm.log.isCreatedLogVisible">
+  <h3>CREATED</h3>
+    <div class="card log-card" >
+    <div class="card-body log-card-body">
+      <h5 class="card-title" ng-switch="vm.log.createdBy.constructor.name">
+        <span ng-switch-when="String">{{ vm.log.createdBy }}</span>
+        <span ng-switch-default>
+          <a href="mailto:{{vm.log.createdBy.email}}" class="log-action-link">
+            <i class="fa fa-envelope"></i>&nbsp;{{ vm.log.createdBy.displayName }} ({{ vm.log.createdBy.username.toUpperCase() }})
+          </a>
+        </span>
+        <strong>CREATED</strong> this {{ vm.objectType }}
+        <div class="btn-toolbar pull-right">
+          <button class="btn btn-primary" ng-click="vm.downloadJSONFile(vm.log.originalData, vm.log.currentData.name + '_original.JSON')">Download Original JSON</button>
+        </div>
+      </h5>
+      <h6 class="card-subtitle mb-2 text-muted">Action performed on: {{ vm.formatDate(vm.log.createdAt) }}</h6>
+    </div>
+    </div>
+  </div>
+
+  <!-- OBJECT DELETED -->
+  <div ng-if="vm.log.deletedAt && vm.log.deletedBy && vm.log.isDeletedLogVisible">
+    <h3>DELETED</h3>
+    <div class="card log-card">
+    <div class="card-body log-card-body">
+      <h5 class="card-title" ng-switch="vm.log.deletedBy.constructor.name">
+        <span ng-switch-when="String">{{ vm.log.deletedBy }}</span>
+        <span ng-switch-default>
+          <a href="mailto:{{vm.log.deletedBy.email}}" class="log-action-link">
+            <i class="fa fa-envelope"></i>&nbsp;{{ vm.log.deletedBy.displayName }} ({{ vm.log.deletedBy.username.toUpperCase() }})
+          </a>
+        </span>
+        <strong>DELETED</strong> this {{ vm.objectType }}
+        <div class="btn-toolbar pull-right">
+          <button class="btn btn-primary" ng-click="vm.downloadJSONFile(vm.log.currentData, vm.log.currentData.name + '_latest.JSON')">Download Latest JSON</button>
+        </div>
+      </h5>
+      <h6 class="card-subtitle mb-2 text-muted">Action performed at: {{ vm.formatDate(vm.log.deletedAt) }}</h6>
+    </div>
+    </div>
+  </div>
+
+  <!-- OBJECT UPDATES -->
+  <div ng-if="vm.log.updates.length != 0 || vm.log.updates.length === 1">
+  <h3>UPDATES</h3>
+  <div class="card log-card" ng-repeat="update in vm.log.updates" ng-if="update.isVisible" ng-click="vm.toggleVisibility('update-table-' + $index)">
+    <div class="card-body log-card-body">
+      <h5 class="card-title" ng-switch="update.updatedBy.constructor.name">
+        <span ng-switch-when="String"><i>{{ update.updatedBy }}</i></span>
+        <span ng-switch-default>
+          <a href="mailto:{{update.updatedBy.email}}" class="log-action-link">
+            <i class="fa fa-envelope"></i>&nbsp;{{ update.updatedBy.displayName }} ({{ update.updatedBy.username.toUpperCase() }})
+          </a>
+        </span>
+        <strong>UPDATED</strong> this {{ vm.objectType }}
+        <div class="btn-toolbar pull-right">
+          <button stop-propagation class="btn btn-success" ng-click="vm.toggleVisibility('update-table-' + $index)">Show Changes</button>
+          <button stop-propagation class="btn btn-primary" ng-click="vm.downloadJSONFile(update.currentData, vm.log.currentData.name + '_update_' + (vm.log.updates.length-$index) + '.JSON')">Download Update #{{ (vm.log.updates.length)-($index) }} JSON</button>
+        </div>
+      </h5>
+      <h6 class="card-subtitle mb-2 text-muted">Action performed at: {{ vm.formatDate(update.updatedAt) }}</h6>
+      <table stop-propagation class="card-text table table-condensed" id="update-table-{{$index}}">
+          <thead>
+            <tr>
+              <th width="30%" class="align-right">Field</th>
+              <th width="30%"></th>
+              <th width="10%" class="no-wrap-text">Modification</th>
+              <th width="30%"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="history-log-row" ng-repeat="change in update.changes">
+              <td class="align-right"><strong>{{ change.name }}</strong></td>
+              <td class="align-right">
+                <strong>Was: </strong>{{ change.origValue.constructor.name != 'Array' ? change.origValue : change.origValue.length == 0 ? 'EMPTY ARRAY' : '["' + change.origValue.join('", "') + '"]' }}
+              </td>
+              <td><i class="fa fa-arrow-circle-right icon-blue"></i></td>
+              <td class="align-left">
+                <strong>Now: </strong>{{ change.newValue.constructor.name != 'Array' ? change.newValue : change.newValue.length == 0 ? 'EMPTY ARRAY' : '["' +  change.newValue.join('", "') + '"]' }}
+                <br><span ng-if="change.addedValues.length > 0"><br><strong>Added: </strong>{{ change.addedValues.join(', ') }}.</span>
+                <span ng-if="change.removedValues.length > 0"><br><strong>Removed: </strong>{{ change.removedValues.join(', ') }}.</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+  </div>
+</section>
